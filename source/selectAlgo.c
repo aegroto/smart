@@ -189,6 +189,7 @@ int main(int argc, const char *argv[]) {
 				order[j] = order[j+1];
 				order[j+1] = tmp;
 			}
+	
 	FILE *fp = fopen("source/algorithms.h", "w");
 	for(j=0; j<NumAlgo; j++) if(ALGO_NAME[j]) fprintf(fp,"#%d #%s \n", EXECUTE[order[j]], ALGO_NAME[order[j]] );
 	fclose(fp);

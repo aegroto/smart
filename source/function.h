@@ -16,7 +16,9 @@
  * contact the authors at: faro@dmi.unict.it, thierry.lecroq@univ-rouen.fr
  * download the tool at: http://www.dmi.unict.it/~faro/smart/
  */
- 
+
+#include <dirent.h>
+
 int string2decimal(char *s) {
 	int i;
 	int decimal;
