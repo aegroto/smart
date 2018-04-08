@@ -1,4 +1,10 @@
 # SMART
+
+## About SMARTPP
+SmartPP is a fork of SMART which supports C++ compilation. It is still unstable and unapproved, so it should not be used in production environments.
+This readme file, taken this paragraph apart, is inherited from the original repository.
+
+## About SMART 
 **[SMART](http://www.dmi.unict.it/~faro/smart/index.php) (String Matching Algorithm Research Tool)** is a tool which provides a standard framework for researchers in string matching. It helps users to test, design, evaluate and understand existing solutions for the exact string matching problem. Moreover it provides the implementation of (almost) all string matching algorithms and a wide corpus of text buffers.
 
 In the last **40 years of research** in computer science string matching was one of the most extensively studied problem, mainly due to its direct applications to such diverse areas as text, image and signal processing, speech analysis and recognition, data compression, information retrieval, computational biology and chemistry. Moreover String matching algorithms are also basic components used in implementations of practical softwares existing under most operating systems.
