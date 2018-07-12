@@ -26,7 +26,7 @@
 
 #include <math.h>
 
-// #define FIXED_ALPHABET
+#define FIXED_ALPHABET
 
 #define ALPHABET_SIZE 2
 #define ALPHABET_MIN_CHAR 0
@@ -226,8 +226,6 @@ void GammaMatcher_init(GammaMatcher* matcher, char* sx, char* sy, size_t m, size
 void GammaMatcher_preprocessing(GammaMatcher* matcher) {
     matcher->l = logarithm(matcher->m, matcher->sigma);
 
-    // printf("[gamma] l is %d\n", matcher->l);
-
     matcher->trie = (GammaTrie*) malloc(sizeof(GammaTrie));
     GammaTrie_init(matcher->trie, matcher->x, matcher->m, matcher->l, matcher->minChar, matcher->maxChar);
 }
@@ -238,22 +236,12 @@ void GammaMatcher_destroy(GammaMatcher* matcher) {
 }
 
 int GammaMatcher_attempt(GammaMatcher* matcher, int start) {
-    // printf("[gamma] comparing at %d (%lu)\n", start, matcher->m); 
-    // int c = -1;
     char *ty = (char*) (matcher->y + start);
 
-    /*while(++c < matcher->m) {
-        // printf("[gamma] comparing %c %c (%d, %lu)\n", matcher->x[c], ty[c], c, matcher->m);
-        if(matcher->x[c] != ty[c])
-            break;
-    }
-
-    return c == matcher->m;*/
     return strncmp(matcher->x, ty, matcher->m) == 0;
 }
 
 void GammaMatcher_search(GammaMatcher* matcher) {
-    // printf("[gamma] searching...");
     int j, k, start;
     GammaNode* node;
     
@@ -279,14 +267,12 @@ void GammaMatcher_search(GammaMatcher* matcher) {
 
                 if(GammaMatcher_attempt(matcher, start)) {
                     matcher->occurrences++;
-                    // printf("[gamma] found occurrence at %d\n", start);
                 }
 
                 position = position->nextPos;
             }
         } 
         j += shift;
-        // printf("[gamma] shifted j to %d (%d)\n", j, shift);
     }
 }
 
@@ -295,7 +281,6 @@ void GammaMatcher_search(GammaMatcher* matcher) {
 /************/
 
 int search(unsigned char *x, int m, unsigned char *y, int n) {
-    // printf("\n[gamma] --- starting on %s %s...\n", x, y);
     BEGIN_PREPROCESSING
     GammaMatcher* matcher = (GammaMatcher*) malloc(sizeof(GammaMatcher)); 
 
