@@ -46,11 +46,11 @@
 
 #include <math.h>
 
-#define FIXED_ALPHABET
+// #define FIXED_ALPHABET
 
-#define ALPHABET_SIZE 2
+#define ALPHABET_SIZE 4 
 #define ALPHABET_MIN_CHAR 0
-#define ALPHABET_MAX_CHAR 1
+#define ALPHABET_MAX_CHAR 3 
 
 /***********/
 /** UTILS **/
@@ -300,12 +300,17 @@ void GammaMatcher_search(GammaMatcher* matcher) {
 /** SEARCH **/
 /************/
 
-int search(unsigned char *x, int m, unsigned char *y, int n) {
-    BEGIN_PREPROCESSING
-    GammaMatcher* matcher = (GammaMatcher*) malloc(sizeof(GammaMatcher)); 
+int search(unsigned char *x, int m, unsigned char *y, int n) { 
+    // Comment to not consider hypothesis calculation on preprocessing time
+    // BEGIN_PREPROCESSING
 
 #ifdef FIXED_ALPHABET
-    GammaMatcher_init(matcher, x, y, m, n, ALPHABET_MIN_CHAR, ALPHABET_MAX_CHAR);
+    char minChar = ALPHABET_MIN_CHAR, maxChar = ALPHABET_MAX_CHAR;
+
+    // Uncomment to not consider hypothesis calculation on preprocessing time
+    BEGIN_PREPROCESSING
+    GammaMatcher* matcher = (GammaMatcher*) malloc(sizeof(GammaMatcher));
+    GammaMatcher_init(matcher, x, y, m, n, minChar, maxChar);
 #else
     char minChar = CHAR_MAX, maxChar = CHAR_MIN;
 
@@ -325,7 +330,10 @@ int search(unsigned char *x, int m, unsigned char *y, int n) {
         }
     }
 
-    // printf("[gamma] minChar = %d, maxChar = %d\n", minChar, maxChar);
+    // Uncomment to not consider hypothesis calculation on preprocessing time
+    BEGIN_PREPROCESSING
+
+    GammaMatcher* matcher = (GammaMatcher*) malloc(sizeof(GammaMatcher));
     GammaMatcher_init(matcher, x, y, m, n, minChar, maxChar);
 #endif
     GammaMatcher_preprocessing(matcher);
@@ -334,8 +342,6 @@ int search(unsigned char *x, int m, unsigned char *y, int n) {
     BEGIN_SEARCHING
     GammaMatcher_search(matcher);
     END_SEARCHING
-
-    // printf("[gamma] exiting (%d)...\n", matcher->occurrences);
 
     int count = matcher->occurrences;
     free(matcher);
