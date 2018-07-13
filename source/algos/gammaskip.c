@@ -16,9 +16,29 @@
  * contact the authors at: faro@dmi.unict.it, thierry.lecroq@univ-rouen.fr
  * download the tool at: http://www.dmi.unict.it/~faro/smart/
  *
- * This is a Gamma Skip Search algorithm implementation
- * Lorenzo Catania, 2018
+ * This is a Gamma Skip Search implementation.
+ * Gamma Skip Search was born as an exam project. It is an Alpha Skip Search
+ * variation. It main differences from the original algorithm are on the 
+ * trie structure which powers the attempt phase. 
+ * 
+ * Lorenzo Catania, July 2018, aegroto@protonmail.com
  */
+
+
+/* 
+ * How to use
+ * If FIXED_ALPHABET is defined, the programmer should also define ALPHABET_SIZE,
+ * ALPHABET_MIN_CHAR and ALPHABET_MAX_CHAR. This mode should be enabled when 
+ * the alphabet is known and fixed. This is a strong hypothesis, but the
+ * algorithm gives best results under those conditions as it was realized to be
+ * applied in those very specific cases.
+ * 
+ * If FIXED_ALPHABET is not defined, an additional pre-processing phase is made to
+ * determine what is the minimum and the maximum character, scanning the pattern 
+ * and the text. This should not be used in pratical uses but only when you want
+ * to test the algorithm on many general cases as it adds an O(n+m) complexity
+ * factor.
+*/
 
 #include "include/define.h"
 #include "include/main.h"
