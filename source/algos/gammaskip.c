@@ -35,8 +35,8 @@
  * 
  * If FIXED_ALPHABET is not defined, an additional pre-processing phase is made to
  * determine what is the minimum and the maximum character, scanning the pattern 
- * and the text. This should not be used in pratical uses but only when you want
- * to test the algorithm on many general cases as it adds an O(n+m) complexity
+ * and the text. This should not be used in practical uses but only when you want
+ * to test the algorithm on many general cases as it adds an O(m) complexity
  * factor.
 */
 
@@ -132,13 +132,12 @@ void GammaNode_destroy(GammaNode* node) {
 }
 
 inline GammaNode* GammaNode_get(GammaNode* node, int c) {
-    /*printf("Trying to receive %d (min = %lu, max = %lu)\n", c, node->arrayOffset, node->arrayOffset + node->arraySize);
+    // printf("Trying to receive %d (min = %lu, max = %lu)\n", c, node->arrayOffset, node->arrayOffset + node->arraySize);
 #ifdef FIXED_ALPHABET
     if(c >= node->arrayOffset)
 #else
     if(c >= node->arrayOffset && c < node->arrayOffset + node->arraySize)
-#endif*/
-    if(c >= node->arrayOffset)
+#endif
         return node->children[c];
 
     return NULL;
@@ -307,18 +306,15 @@ void GammaMatcher_search(GammaMatcher* matcher) {
 /************/
 
 int search(unsigned char *x, int m, unsigned char *y, int n) { 
-    // Comment to not consider hypothesis calculation on preprocessing time
-     BEGIN_PREPROCESSING
+    BEGIN_PREPROCESSING
 
 #ifdef FIXED_ALPHABET
     char minChar = ALPHABET_MIN_CHAR, maxChar = ALPHABET_MAX_CHAR;
 
-    // Uncomment to not consider hypothesis calculation on preprocessing time
-    // BEGIN_PREPROCESSING
     GammaMatcher* matcher = (GammaMatcher*) malloc(sizeof(GammaMatcher));
     GammaMatcher_init(matcher, x, y, m, n, minChar, maxChar);
 #else
-    char minChar = CHAR_MAX, maxChar = CHAR_MIN;
+    char minChar = x[0], maxChar = x[0];
 
     for(int i = 0; i < m; ++i) {
         if(x[i] < minChar) {
@@ -327,17 +323,6 @@ int search(unsigned char *x, int m, unsigned char *y, int n) {
             maxChar = x[i];
         }
     }
-
-    for(int i = 0; i < n; ++i) {
-        if(y[i] < minChar) {
-            minChar = y[i];
-        } else if(y[i] > maxChar) {
-            maxChar = y[i];
-        }
-    }
-
-    // Uncomment to not consider hypothesis calculation on preprocessing time
-    // BEGIN_PREPROCESSING
 
     GammaMatcher* matcher = (GammaMatcher*) malloc(sizeof(GammaMatcher));
     GammaMatcher_init(matcher, x, y, m, n, minChar, maxChar);
