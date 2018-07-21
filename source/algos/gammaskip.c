@@ -132,6 +132,12 @@ void GammaNode_destroy(GammaNode* node) {
 }
 
 inline GammaNode* GammaNode_get(GammaNode* node, int c) {
+    /*printf("Trying to receive %d (min = %lu, max = %lu)\n", c, node->arrayOffset, node->arrayOffset + node->arraySize);
+#ifdef FIXED_ALPHABET
+    if(c >= node->arrayOffset)
+#else
+    if(c >= node->arrayOffset && c < node->arrayOffset + node->arraySize)
+#endif*/
     if(c >= node->arrayOffset)
         return node->children[c];
 
@@ -302,13 +308,13 @@ void GammaMatcher_search(GammaMatcher* matcher) {
 
 int search(unsigned char *x, int m, unsigned char *y, int n) { 
     // Comment to not consider hypothesis calculation on preprocessing time
-    // BEGIN_PREPROCESSING
+     BEGIN_PREPROCESSING
 
 #ifdef FIXED_ALPHABET
     char minChar = ALPHABET_MIN_CHAR, maxChar = ALPHABET_MAX_CHAR;
 
     // Uncomment to not consider hypothesis calculation on preprocessing time
-    BEGIN_PREPROCESSING
+    // BEGIN_PREPROCESSING
     GammaMatcher* matcher = (GammaMatcher*) malloc(sizeof(GammaMatcher));
     GammaMatcher_init(matcher, x, y, m, n, minChar, maxChar);
 #else
@@ -331,7 +337,7 @@ int search(unsigned char *x, int m, unsigned char *y, int n) {
     }
 
     // Uncomment to not consider hypothesis calculation on preprocessing time
-    BEGIN_PREPROCESSING
+    // BEGIN_PREPROCESSING
 
     GammaMatcher* matcher = (GammaMatcher*) malloc(sizeof(GammaMatcher));
     GammaMatcher_init(matcher, x, y, m, n, minChar, maxChar);
